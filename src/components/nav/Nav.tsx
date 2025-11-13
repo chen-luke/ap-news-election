@@ -1,15 +1,17 @@
+import styles from './nav.module.css';
+
 const Nav = () => {
   return (
     <nav>
-      <div className='wrapper'>
-        <div>
+      <div className={styles.wrapper}>
+        <div className={styles.container}>
           <a href=''>
             <picture>
               <source />
               <img src='public\ap-logo-176-by-208.svg' alt='' />
             </picture>
           </a>
-          <ul>
+          <ul style={{ display: 'flex' }}>
             <li>World</li>
             <li>U.S.</li>
             <li>Politics</li>
