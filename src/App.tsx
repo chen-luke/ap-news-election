@@ -1,32 +1,11 @@
 import './App.css';
+import Nav from './components/Nav';
 
 function App() {
   return (
     <>
       <div>
-        <nav>
-          <div className='wrapper'>
-            <div>
-              <a href=''>
-                <picture>
-                  <source />
-                  <img src='public\ap-logo-176-by-208.svg' alt='' />
-                </picture>
-              </a>
-              <ul>
-                <li>World</li>
-                <li>U.S.</li>
-                <li>Politics</li>
-                <li>Entertainment</li>
-                <li>Science</li>
-                <li>Business</li>
-                <li>Fact Check</li>
-                <li>Newsletters</li>
-              </ul>
-              <a>Donate</a>
-            </div>
-          </div>
-        </nav>
+        <Nav />
         <h1>2025 General Election Results</h1>
         <h3>Key races</h3>
         <div>
