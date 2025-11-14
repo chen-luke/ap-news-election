@@ -1,0 +1,28 @@
+import styled from 'styled-components';
+
+const StyledDropDown = styled.div`
+  display: flex;
+  justify-content: end;
+  padding: 0.5rem 0;
+  margin-right: 15px;
+`;
+
+const StyledSelect = styled.select``;
+
+const StateDropdown = () => {
+  return (
+    <StyledDropDown>
+      <StyledSelect id='stateSelect' name='selection'>
+        <option value='' disabled selected hidden>
+          Select A State
+        </option>
+        <option value=''>New York</option>
+        <option value=''>Massachusetts</option>
+        <option value=''>Texas</option>
+        <option value=''>North Carolina</option>
+      </StyledSelect>
+    </StyledDropDown>
+  );
+};
+
+export default StateDropdown;
