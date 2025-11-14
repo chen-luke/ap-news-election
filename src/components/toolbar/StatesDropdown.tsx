@@ -7,7 +7,16 @@ const StyledDropDown = styled.div`
   margin-right: 15px;
 `;
 
-const StyledSelect = styled.select``;
+const StyledSelect = styled.select`
+  background-color: white;
+  padding: 0 1rem;
+  border-radius: 0.5rem;
+  color: #696969;
+  text-align: center;
+  border-color: white;
+  border-right: 1rem solid #ffffffff;
+  padding-top: 3px;
+`;
 
 const StateDropdown = () => {
   return (
