@@ -18,6 +18,7 @@ const StyledUl = styled.ul`
   padding: 0;
   display: flex;
   flex-wrap: wrap;
+  gap: 2rem;
   align-items: center;
   justify-content: center;
   list-style: none;
@@ -51,14 +52,14 @@ const Nav = () => {
             <Logo src='public\ap-logo-176-by-208.svg' alt='' />
           </a>
           <StyledUl>
-            <li>World</li>
+            <li>WORLD</li>
             <li>U.S.</li>
-            <li>Politics</li>
-            <li>Entertainment</li>
-            <li>Science</li>
-            <li>Business</li>
-            <li>Fact Check</li>
-            <li>Newsletters</li>
+            <li>POLITICS</li>
+            <li>ENTERTAINMENT</li>
+            <li>SCIENCE</li>
+            <li>BUSINESS</li>
+            <li>FACT CHECK</li>
+            <li>NEWSLETTERS</li>
           </StyledUl>
           <DonateButton>Donate</DonateButton>
         </StyledContainer>
