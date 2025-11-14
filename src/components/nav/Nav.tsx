@@ -40,10 +40,11 @@ const DonateButton = styled.a`
   text-transform: uppercase;
   color: #fff;
   border-radius: 4px;
-  margin-right: 20px;
+  margin-right: 15px;
   padding: 8px 12px;
   cursor: pointer;
   text-decoration: none;
+  text-align: center;
 `;
 
 const Nav = () => {
