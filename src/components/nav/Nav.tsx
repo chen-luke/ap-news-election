@@ -18,10 +18,13 @@ const StyledUl = styled.ul`
   padding: 0;
   display: flex;
   flex-wrap: wrap;
-  gap: 2rem;
+  gap: 1.3rem;
   align-items: center;
   justify-content: center;
   list-style: none;
+  font-weight: 500;
+  color: white;
+  font-size: 0.85rem;
 `;
 
 const Logo = styled.img`
