@@ -35,7 +35,7 @@ const StyledLinks = styled.a`
   font-weight: 300;
 `;
 
-const ToolBar = () => {
+export default function ToolBar() {
   return (
     <StyledToolBar>
       <StyledLogoContainer>
@@ -48,6 +48,4 @@ const ToolBar = () => {
       <StateDropdown />
     </StyledToolBar>
   );
-};
-
-export default ToolBar;
+}

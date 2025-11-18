@@ -18,7 +18,7 @@ const StyledSelect = styled.select`
   padding-top: 3px;
 `;
 
-const StateDropdown = () => {
+export default function StateDropdown() {
   return (
     <StyledDropDown>
       <StyledSelect id='stateSelect' name='selection'>
@@ -32,6 +32,4 @@ const StateDropdown = () => {
       </StyledSelect>
     </StyledDropDown>
   );
-};
-
-export default StateDropdown;
+}
