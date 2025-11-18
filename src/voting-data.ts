@@ -16,54 +16,54 @@ interface KeyRacesType {
 const keyRaces: KeyRacesType[] = [
   {
     id: 1,
-    name: 'Virginia Governor',
+    name: 'VIRGINIA GOVERNOR',
     voteEstimated: '99%',
     choices: [
       {
         name: 'Abigail Spanberger',
         isLeading: true,
         votePercentage: '57.5%',
-        party: 'Democrat',
+        party: 'Dem',
       },
       {
         name: 'Winsome Earle-Sears',
         isLeading: false,
         votePercentage: '42.3%',
-        party: 'Republican',
+        party: 'GOP',
       },
     ],
     lastUpdated: 'Nov 10, 2025, 2:33PM',
   },
   {
     id: 2,
-    name: 'New Jersey Governor',
+    name: 'NEW JERSEY GOVERNOR',
     voteEstimated: '98%',
     choices: [
       {
         name: 'Mikie Sherrill',
         isLeading: true,
         votePercentage: '56.6%',
-        party: 'Democrat',
+        party: 'Dem',
       },
       {
         name: 'Jack Ciattarelli',
         isLeading: false,
         votePercentage: '42.8%',
-        party: 'Republican',
+        party: 'GOP',
       },
     ],
     lastUpdated: 'Nov 10, 2025, 2:30PM',
   },
   {
     id: 3,
-    name: 'New York Mayor',
+    name: 'NEW YORK MAYOR',
     voteEstimated: '97%',
     choices: [
       {
         name: 'Zohran Mamdani',
         isLeading: true,
         votePercentage: '50.4%',
-        party: 'Democrat',
+        party: 'Dem',
       },
       {
         name: 'Andrew Cuomo',
@@ -76,7 +76,7 @@ const keyRaces: KeyRacesType[] = [
   },
   {
     id: 4,
-    name: 'California Proposition 50',
+    name: 'CALIFORNIA PROPOSITION 50',
     voteEstimated: '96%',
     choices: [
       { name: 'Yes', isLeading: true, votePercentage: '64.3%' },
@@ -87,3 +87,4 @@ const keyRaces: KeyRacesType[] = [
 ];
 
 export { keyRaces };
+export type { KeyRacesType, ChoiceType };
