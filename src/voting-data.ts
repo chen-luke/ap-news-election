@@ -3,6 +3,7 @@ interface ChoiceType {
   isLeading: boolean;
   votePercentage: string;
   party?: string;
+  partyColor: string;
 }
 
 interface KeyRacesType {
@@ -23,13 +24,15 @@ const keyRaces: KeyRacesType[] = [
         name: 'Abigail Spanberger',
         isLeading: true,
         votePercentage: '57.5%',
-        party: 'Dem',
+        party: 'DEM',
+        partyColor: '#3b82f6',
       },
       {
         name: 'Winsome Earle-Sears',
         isLeading: false,
         votePercentage: '42.3%',
         party: 'GOP',
+        partyColor: '#ff5733',
       },
     ],
     lastUpdated: 'Nov 10, 2025, 2:33PM',
@@ -43,13 +46,15 @@ const keyRaces: KeyRacesType[] = [
         name: 'Mikie Sherrill',
         isLeading: true,
         votePercentage: '56.6%',
-        party: 'Dem',
+        party: 'DEM',
+        partyColor: '#3b82f6',
       },
       {
         name: 'Jack Ciattarelli',
         isLeading: false,
         votePercentage: '42.8%',
         party: 'GOP',
+        partyColor: '#ff5733',
       },
     ],
     lastUpdated: 'Nov 10, 2025, 2:30PM',
@@ -63,13 +68,15 @@ const keyRaces: KeyRacesType[] = [
         name: 'Zohran Mamdani',
         isLeading: true,
         votePercentage: '50.4%',
-        party: 'Dem',
+        party: 'DEM',
+        partyColor: '#3b82f6',
       },
       {
         name: 'Andrew Cuomo',
         isLeading: false,
         votePercentage: '41.6%',
         party: 'OTH',
+        partyColor: '#ffd900ff',
       },
     ],
     lastUpdated: 'Nov 10, 2025, 2:25PM',
@@ -79,8 +86,18 @@ const keyRaces: KeyRacesType[] = [
     name: 'CALIFORNIA PROPOSITION 50',
     voteEstimated: '96%',
     choices: [
-      { name: 'Yes', isLeading: true, votePercentage: '64.3%' },
-      { name: 'No', isLeading: false, votePercentage: '35.7%' },
+      {
+        name: 'Yes',
+        isLeading: true,
+        votePercentage: '64.3%',
+        partyColor: '#4caf50',
+      },
+      {
+        name: 'No',
+        isLeading: false,
+        votePercentage: '35.7%',
+        partyColor: '#f5ad28ff',
+      },
     ],
     lastUpdated: 'Nov 10, 2025, 2:20PM',
   },

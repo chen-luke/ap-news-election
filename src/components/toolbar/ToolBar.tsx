@@ -35,11 +35,11 @@ const StyledLinks = styled.a`
   font-weight: 300;
 `;
 
-const ToolBar = () => {
+export default function ToolBar() {
   return (
     <StyledToolBar>
       <StyledLogoContainer>
-        <StyledLogo src='./public/AP_Elections_B2C_2025_logo_small_dbg_RGB.svg'></StyledLogo>
+        <StyledLogo src='./AP_Elections_B2C_2025_logo_small_dbg_RGB.svg'></StyledLogo>
       </StyledLogoContainer>
       <StyledHeaderLinks>
         <StyledLinks>EARLY VOTING</StyledLinks>
@@ -48,6 +48,4 @@ const ToolBar = () => {
       <StateDropdown />
     </StyledToolBar>
   );
-};
-
-export default ToolBar;
+}
