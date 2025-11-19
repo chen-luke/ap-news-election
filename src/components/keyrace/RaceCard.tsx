@@ -138,6 +138,27 @@ const RaceCard = (props: { keyrace: KeyRacesType }) => {
         ))}
         <LastUpdated>Updated {keyrace.lastUpdated}</LastUpdated>
       </RaceCardSummary>
+      <div
+        style={{
+          display: 'flex',
+          justifyContent: 'center',
+          marginTop: '0.3rem',
+        }}
+      >
+        <button
+          style={{
+            backgroundColor: 'transparent',
+            backgroundImage: 'url(./download.svg)',
+            backgroundRepeat: 'no-repeat',
+            backgroundPosition: 'center',
+            backgroundSize: 'contain',
+            height: '24px',
+            width: '24px',
+            border: 'none',
+            outline: 'none',
+          }}
+        ></button>
+      </div>
     </RaceCardContainer>
   );
 };
