@@ -59,18 +59,31 @@ const HrStyle = styled.hr`
   color: #fff;
 `;
 
-const VoteCountsBar = styled.div<{ progress: number; color: string }>`
+const VoteProgressMeter = styled.meter<{ color: string }>`
   width: 100%;
   height: 2px;
   border-radius: 3px;
-  background: linear-gradient(
-    to right,
-    ${(props) => props.color} 0%,
-    ${(props) => props.color} ${(props) => props.progress}%,
-    #e5e7eb ${(props) => props.progress}%,
-    #e5e7eb 100%
-  );
-  margin: 3px 0;
+  overflow: hidden;
+  background: #e5e7eb;
+
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+
+  /* --- 1. FIREFOX STYLING --- */
+  &::-moz-meter-bar {
+    /* Sets the background color of the filled value bar */
+    background: ${(props) => props.color};
+    border-radius: 3px;
+  }
+
+  /* --- 2. WEBKIT STYLING (Chrome, Safari, Edge) --- */
+  /* Target the filled value at all potential states (optimum, sub-optimum, etc.) */
+  &::-webkit-meter-optimum-value,
+  &::-webkit-meter-suboptimum-value,
+  &::-webkit-meter-even-less-good-value {
+    background: ${(props) => props.color};
+  }
 `;
 
 const LeadingIndicator = styled.svg`
@@ -103,7 +116,10 @@ const RaceCard = (props: { keyrace: KeyRacesType }) => {
         <HrStyle />
 
         {keyrace.choices.map((choice) => (
-          <div key={choice.name}>
+          <div
+            key={choice.name}
+            style={{ display: 'flex', flexDirection: 'column', gap: '3px' }}
+          >
             <RaceChoice isBold={choice.isLeading}>
               <div style={{ display: 'flex', alignItems: 'center' }}>
                 {choice.isLeading && (
@@ -130,8 +146,10 @@ const RaceCard = (props: { keyrace: KeyRacesType }) => {
               </div>
               <div>{choice.votePercentage}</div>
             </RaceChoice>
-            <VoteCountsBar
-              progress={parseInt(choice.votePercentage)}
+            <VoteProgressMeter
+              min={0}
+              max={100}
+              value={parseInt(choice.votePercentage)}
               color={choice.partyColor}
             />
           </div>
