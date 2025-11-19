@@ -53,7 +53,7 @@ const Nav = () => {
       <StyledWrapper>
         <StyledContainer>
           <a href=''>
-            <Logo src='public\ap-logo-176-by-208.svg' alt='' />
+            <Logo src='./ap-logo-176-by-208.svg' alt='' />
           </a>
           <StyledUl>
             <li>WORLD</li>
