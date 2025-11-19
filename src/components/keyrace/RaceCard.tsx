@@ -53,6 +53,43 @@ const RaceChoice = styled.div<{ isBold: boolean }>`
   justify-content: space-between;
 `;
 
+const HrStyle = styled.hr`
+  width: 100%;
+  margin: 3px 0;
+  color: #fff;
+`;
+
+const VoteCountsBar = styled.div<{ progress: number; color: string }>`
+  width: 100%;
+  height: 2px;
+  border-radius: 3px;
+  background: linear-gradient(
+    to right,
+    ${(props) => props.color} 0%,
+    ${(props) => props.color} ${(props) => props.progress}%,
+    #e5e7eb ${(props) => props.progress}%,
+    #e5e7eb 100%
+  );
+  margin: 3px 0;
+`;
+
+const LeadingIndicator = styled.svg`
+  height: 1rem;
+  width: 1rem;
+  flex-shrink: 0;
+  padding-right: 5px;
+`;
+
+const LastUpdated = styled.div`
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: space-between;
+  margin-top: 0.2rem;
+  font-size: 0.75rem;
+  font-weight: 300;
+  color: #696969;
+`;
+
 const RaceCard = (props: { keyrace: KeyRacesType }) => {
   const { keyrace } = props;
   return (
