@@ -42,7 +42,7 @@ const RaceCardVoteEstimate = styled.span`
 `;
 
 const APIcon = styled.img`
-  width: 16px;
+  width: 12px;
 `;
 
 const RaceChoice = styled.div<{ isBold: boolean }>`
