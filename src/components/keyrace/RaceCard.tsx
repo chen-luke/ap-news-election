@@ -7,9 +7,14 @@ const RaceCardContainer = styled.div`
   background-color: white;
   padding: 10px 12px 10px;
   gap: 3px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 2px 6px;
   border-radius: 3px;
   cursor: pointer;
+  transition: transform 0.2s ease-in-out;
+  // Hover effect to move the card
+  &:hover {
+    transform: translateY(-5px);
+  }
 `;
 
 const RaceCardTitle = styled.div`
