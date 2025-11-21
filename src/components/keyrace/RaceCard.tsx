@@ -5,8 +5,9 @@ const RaceCardContainer = styled.div`
   width: 243px;
   display: grid;
   background-color: white;
-  padding: 10px 12px 10px;
+  padding: 10px 12px;
   gap: 3px;
+  box-sizing: border-box;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 2px 6px;
   border-radius: 3px;
   cursor: pointer;
@@ -182,3 +183,4 @@ const RaceCard = (props: { keyrace: KeyRacesType }) => {
 };
 
 export default RaceCard;
+export { LeadingIndicator };

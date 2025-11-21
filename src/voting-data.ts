@@ -103,5 +103,181 @@ const keyRaces: KeyRacesType[] = [
   },
 ];
 
-export { keyRaces };
-export type { KeyRacesType, ChoiceType };
+interface AllRaceType {
+  id: number;
+  race: string;
+  leader: string;
+  votesCounted: string;
+}
+
+interface RaceGroup {
+  pollTime: string;
+  races: AllRaceType[];
+}
+
+interface FlatRace extends AllRaceType {
+  pollTime: string;
+}
+
+const allRaces: RaceGroup[] = [
+  {
+    pollTime: '7 p.m.',
+    races: [
+      {
+        id: 1,
+        race: 'VA Governor',
+        leader: 'Spanberger',
+        votesCounted: '99%',
+      },
+      {
+        id: 2,
+        race: 'VA Lieutenant Governor',
+        leader: 'Hashmi',
+        votesCounted: '99%',
+      },
+      {
+        id: 3,
+        race: 'VA Attorney General',
+        leader: 'Jones',
+        votesCounted: '99%',
+      },
+    ],
+  },
+  {
+    pollTime: '7:30 p.m.',
+    races: [
+      {
+        id: 4,
+        race: 'Cincinnati Mayor',
+        leader: 'Pureval',
+        votesCounted: '100%',
+      },
+    ],
+  },
+  {
+    pollTime: '8 p.m.',
+    races: [
+      {
+        id: 5,
+        race: 'Atlanta Mayor',
+        leader: 'Dickens',
+        votesCounted: '100%',
+      },
+      {
+        id: 6,
+        race: 'ME Question 1',
+        leader: 'No',
+        votesCounted: '100%',
+      },
+      {
+        id: 7,
+        race: 'ME Question 2',
+        leader: 'Yes',
+        votesCounted: '100%',
+      },
+      {
+        id: 8,
+        race: 'Detroit Mayor',
+        leader: 'Sheffield',
+        votesCounted: '100%',
+      },
+      {
+        id: 9,
+        race: 'NJ Governor',
+        leader: 'Sherrill',
+        votesCounted: '99%',
+      },
+      {
+        id: 10,
+        race: 'Jersey City Mayor',
+        leader: 'Solomon',
+        votesCounted: '99%',
+      },
+      {
+        id: 11,
+        race: 'Pittsburgh Mayor',
+        leader: "O'Connor",
+        votesCounted: '98%',
+      },
+      {
+        id: 12,
+        race: 'PA Supreme Court - Retain Kevin Dougherty',
+        leader: 'Yes',
+        votesCounted: '99%',
+      },
+      {
+        id: 13,
+        race: 'PA Supreme Court - Retain Christine Donohue',
+        leader: 'Yes',
+        votesCounted: '99%',
+      },
+      {
+        id: 14,
+        race: 'PA Supreme Court - Retain David Wecht',
+        leader: 'Yes',
+        votesCounted: '99%',
+      },
+      {
+        id: 15,
+        race: 'TX U.S. House District 18 Unexpired Term',
+        leader: 'Menefee',
+        votesCounted: '99%',
+      },
+    ],
+  },
+  {
+    pollTime: '9 p.m.',
+    races: [
+      {
+        id: 16,
+        race: 'CO Proposition MM',
+        leader: 'Yes',
+        votesCounted: '99%',
+      },
+      {
+        id: 17,
+        race: 'Minneapolis Mayor',
+        leader: 'Frey',
+        votesCounted: '100%',
+      },
+      {
+        id: 18,
+        race: 'New York City Mayor',
+        leader: 'Mamdani',
+        votesCounted: '93%',
+      },
+      {
+        id: 19,
+        race: 'Buffalo Mayor',
+        leader: 'Ryan',
+        votesCounted: '98%',
+      },
+      {
+        id: 20,
+        race: 'TX Proposition 15',
+        leader: 'For',
+        votesCounted: '99%',
+      },
+      {
+        id: 21,
+        race: 'TX Proposition 16',
+        leader: 'For',
+        votesCounted: '99%',
+      },
+    ],
+  },
+  {
+    pollTime: '11 p.m.',
+    races: [
+      {
+        id: 22,
+        race: 'CA Proposition 50',
+        leader: 'Yes',
+        votesCounted: '99%',
+      },
+    ],
+  },
+];
+
+export { keyRaces, allRaces };
+export type { KeyRacesType, ChoiceType, RaceGroup, FlatRace };
