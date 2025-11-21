@@ -23,6 +23,7 @@ const LeadingIndicator = (props: { color: string }) => {
     </svg>
   );
 };
+
 export default function RaceLegend() {
   return (
     <PartyLegends>
