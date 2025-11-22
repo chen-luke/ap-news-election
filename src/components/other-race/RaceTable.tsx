@@ -1,77 +1,132 @@
-import type { FlatRace, RaceGroup } from '../../voting-data';
+import type { AllRaceType } from '../../voting-data';
 import { useMemo } from 'react';
+
+interface RenderReadyRace extends AllRaceType {
+  rowSpan: number;
+}
 
 const MAX_ROWS_PER_TABLE = 11;
 
-const calculateRowSpan = (races: FlatRace[], index: number) => {
-  const currentRace = races[index];
+const parseTimeWeight = (timeStr: string): number => {
+  const clean = timeStr.toLowerCase().replace(/\./g, '').trim();
+  let [time, modifier] = clean.split(' ');
+  if (!modifier) modifier = 'pm';
 
-  // Look behind: If previous item has same time, this cell is covered.
-  if (index > 0 && currentRace.pollTime === races[index - 1].pollTime) {
-    return 0;
-  }
+  let [hours, minutes] = time.split(':').map(Number);
+  if (!minutes) minutes = 0;
 
-  // Look ahead: Count how many consecutive items have the same time
-  let span = 1;
-  for (let i = index + 1; i < races.length; i++) {
-    if (currentRace.pollTime === races[i].pollTime) {
-      span++;
-    } else {
-      break;
-    }
-  }
-  return span;
+  if (modifier === 'pm' && hours !== 12) hours += 12;
+  if (modifier === 'am' && hours === 12) hours = 0;
+
+  return hours * 100 + minutes;
 };
 
-const createTable = (races: FlatRace[], tableIndex: number) => {
-  return (
-    <div>
-      <table key={tableIndex}>
+const getMarginColor = (partyColor: string) => {
+  if (partyColor === '#F3BB2D') return '#91701b';
+  if (partyColor === '#E06016') return '#86390d';
+  if (partyColor === '#16A5A3') return '#0d6361';
+  return '#014678';
+};
+
+/**
+ * Takes a raw list of races and returns a new list with 'rowSpan' attached.
+ */
+const calcRowSpan = (list: AllRaceType[]): RenderReadyRace[] => {
+  return list.map((item, index) => {
+    const isCovered = index > 0 && list[index - 1].pollTime === item.pollTime;
+    let rowSpan = 0;
+
+    if (!isCovered) {
+      let span = 1;
+      for (let i = index + 1; i < list.length; i++) {
+        if (list[i].pollTime === item.pollTime) {
+          span++;
+        } else {
+          break;
+        }
+      }
+      rowSpan = span;
+    }
+
+    return { ...item, rowSpan };
+  });
+};
+
+export default function RaceTable({ data }: { data: AllRaceType[] }) {
+  const tableChunks = useMemo(() => {
+    // --- STEP 1: BUCKET SORT ---
+    const buckets: Record<string, AllRaceType[]> = {};
+
+    data.forEach((race) => {
+      if (!buckets[race.pollTime]) buckets[race.pollTime] = [];
+      buckets[race.pollTime].push(race);
+    });
+
+    const sortedTimes = Object.keys(buckets).sort((a, b) => {
+      return parseTimeWeight(a) - parseTimeWeight(b);
+    });
+
+    const sortedList: AllRaceType[] = [];
+    sortedTimes.forEach((time) => {
+      sortedList.push(...buckets[time]);
+    });
+
+    // --- STEP 2: SPLIT ---
+    let leftRaw: AllRaceType[] = [];
+    let rightRaw: AllRaceType[] = [];
+    const totalItems = sortedList.length;
+
+    if (totalItems <= MAX_ROWS_PER_TABLE) {
+      leftRaw = sortedList;
+    } else {
+      const midPoint = Math.ceil(totalItems / 2);
+      leftRaw = sortedList.slice(0, midPoint);
+      rightRaw = sortedList.slice(midPoint);
+    }
+
+    // --- STEP 3: ENRICH ---
+    const leftTable = calcRowSpan(leftRaw);
+    const rightTable = calcRowSpan(rightRaw);
+
+    return rightTable.length > 0 ? [leftTable, rightTable] : [leftTable];
+  }, [data]);
+
+  const renderTable = (races: RenderReadyRace[], tableIndex: number) => (
+    <>
+      {/* border=1 added just so you can verify the rowspan visually */}
+      <table border={1} key={tableIndex}>
         <thead>
           <tr>
-            <th>Poll Time</th>
+            <th>Poll Close</th>
             <th>Race</th>
             <th>Leader</th>
-            <th>Votes Counted</th>
+            <th>Est. Votes</th>
           </tr>
         </thead>
         <tbody>
-          {races.map((r, i) => {
-            const rowSpan = calculateRowSpan(races, i);
+          {races.map((race) => {
             return (
-              <tr key={r.id}>
-                {rowSpan > 0 && <td rowSpan={rowSpan}>{r.pollTime}</td>}
-                <td>{r.race}</td>
-                <td>{r.leader}</td>
-                <td>{r.votesCounted}</td>
+              <tr key={race.id}>
+                {race.rowSpan > 0 && (
+                  <td rowSpan={race.rowSpan}>{race.pollTime}</td>
+                )}
+
+                <td>
+                  <a href={race.raceUrl}>{race.race} »</a>
+                </td>
+
+                <td>
+                  {race.leader} ({race.margin})
+                </td>
+
+                <td>{race.votesCounted}</td>
               </tr>
             );
           })}
         </tbody>
       </table>
-    </div>
+    </>
   );
-};
 
-export default function RaceTable({ data }: { data: RaceGroup[] }) {
-  const tableChunks: FlatRace[][] = useMemo(() => {
-    const flattenData: FlatRace[] = data.flatMap((pollGroup: RaceGroup) =>
-      pollGroup.races.map((race) => ({
-        pollTime: pollGroup.pollTime,
-        ...race,
-      }))
-    );
-
-    if (flattenData.length <= MAX_ROWS_PER_TABLE) {
-      return [flattenData];
-    }
-
-    const midPoint = Math.ceil(flattenData.length / 2);
-    const tableOne = flattenData.slice(0, midPoint);
-    const tableTwo = flattenData.slice(midPoint);
-
-    return [tableOne, tableTwo];
-  }, [data]);
-
-  return <>{tableChunks.map((chunk, index) => createTable(chunk, index))}</>;
+  return <>{tableChunks.map((chunk, i) => renderTable(chunk, i))}</>;
 }
