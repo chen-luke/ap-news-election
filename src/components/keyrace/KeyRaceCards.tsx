@@ -7,6 +7,7 @@ import type { JSX } from 'react';
 const KeyRaceContainer = styled.div`
   display: flex;
   gap: 1rem;
+  flex-wrap: wrap;
 `;
 
 export default function KeyRaceCards(): JSX.Element {
