@@ -1,5 +1,6 @@
 import type { AllRaceType } from '../../voting-data';
 import { useMemo } from 'react';
+import styled from 'styled-components';
 
 interface RenderReadyRace extends AllRaceType {
   rowSpan: number;
@@ -52,6 +53,38 @@ const calcRowSpan = (list: AllRaceType[]): RenderReadyRace[] => {
   });
 };
 
+const StyledTD = styled.td`
+  vertical-align: top;
+  min-width: 35px;
+  border-bottom: 1px solid rgba(218, 218, 218, 1);
+  padding: 5px 0px;
+  font-
+`;
+
+const StyledTH = styled.th`
+  text-align: left;
+  color: rgb(73, 73, 73);
+  border-bottom: 1px solid black;
+  min-width: 35px;
+  padding-left: 0px;
+  line-height: 1rem;
+  font-size: 0.75rem;
+  font-weight: 525;
+  text-transform: uppercase;
+  width: 15%;
+`;
+
+const StyledTable = styled.table`
+  border-collapse: collapse;
+  table-layout: fixed;
+  width: 48%;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+  font-size: 12px;
+  font-family: Roboto Condensed;
+  font-stretch: 50%;
+`;
+
 export default function RaceTable({ data }: { data: AllRaceType[] }) {
   const tableChunks = useMemo(() => {
     // --- STEP 1: BUCKET SORT ---
@@ -94,13 +127,20 @@ export default function RaceTable({ data }: { data: AllRaceType[] }) {
   const renderTable = (races: RenderReadyRace[], tableIndex: number) => (
     <>
       {/* border=1 added just so you can verify the rowspan visually */}
-      <table border={1} key={tableIndex}>
+      <StyledTable key={tableIndex}>
+        <colgroup>
+          <col style={{ width: '5%' }} />
+          <col style={{ width: '68%' }} />{' '}
+          {/* Give the most space to the Race Name */}
+          <col style={{ width: '25%' }} />
+          <col style={{ width: '5%' }} />
+        </colgroup>
         <thead>
           <tr>
-            <th>Poll Close</th>
-            <th>Race</th>
-            <th>Leader</th>
-            <th>Est. Votes</th>
+            <StyledTH>Poll Close</StyledTH>
+            <StyledTH>Race</StyledTH>
+            <StyledTH>Leader</StyledTH>
+            <StyledTH colSpan={1}>Est. Votes Counted</StyledTH>
           </tr>
         </thead>
         <tbody>
@@ -108,23 +148,23 @@ export default function RaceTable({ data }: { data: AllRaceType[] }) {
             return (
               <tr key={race.id}>
                 {race.rowSpan > 0 && (
-                  <td rowSpan={race.rowSpan}>{race.pollTime}</td>
+                  <StyledTD rowSpan={race.rowSpan}>{race.pollTime}</StyledTD>
                 )}
 
-                <td>
+                <StyledTD>
                   <a href={race.raceUrl}>{race.race} »</a>
-                </td>
+                </StyledTD>
 
-                <td>
-                  {race.leader} ({race.margin})
-                </td>
+                <StyledTD>
+                  {race.leader} {race.margin}
+                </StyledTD>
 
-                <td>{race.votesCounted}</td>
+                <StyledTD>{race.votesCounted}</StyledTD>
               </tr>
             );
           })}
         </tbody>
-      </table>
+      </StyledTable>
     </>
   );
 
