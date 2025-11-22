@@ -1,6 +1,7 @@
 import type { AllRaceType } from '../../voting-data';
 import { useMemo } from 'react';
 import styled from 'styled-components';
+import { LeadingIndicator } from './RaceLegend';
 
 interface RenderReadyRace extends AllRaceType {
   rowSpan: number;
@@ -58,7 +59,6 @@ const StyledTD = styled.td`
   min-width: 35px;
   border-bottom: 1px solid rgba(218, 218, 218, 1);
   padding: 5px 0px;
-  font-
 `;
 
 const StyledTH = styled.th`
@@ -151,12 +151,22 @@ export default function RaceTable({ data }: { data: AllRaceType[] }) {
                   <StyledTD rowSpan={race.rowSpan}>{race.pollTime}</StyledTD>
                 )}
 
-                <StyledTD>
+                <StyledTD
+                  style={{ display: 'flex', alignItems: 'center', gap: '5px' }}
+                >
+                  <LeadingIndicator
+                    color={race.partyColor}
+                    width='12px'
+                    height='12px'
+                  ></LeadingIndicator>
                   <a href={race.raceUrl}>{race.race} »</a>
                 </StyledTD>
 
                 <StyledTD>
-                  {race.leader} {race.margin}
+                  {race.leader}{' '}
+                  <span style={{ color: getMarginColor(race.partyColor) }}>
+                    {race.margin}
+                  </span>
                 </StyledTD>
 
                 <StyledTD>{race.votesCounted}</StyledTD>
