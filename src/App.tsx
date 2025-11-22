@@ -11,6 +11,15 @@ const MainContainer = styled.main`
   max-width: 1030px;
 `;
 
+const Footer = styled.footer`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 8rem;
+  background-color: #f1f1f1;
+  margin-top: 4rem;
+`;
+
 function App() {
   return (
     <>
@@ -24,6 +33,7 @@ function App() {
           <OtherRaces />
         </MainContainer>
       </div>
+      <Footer></Footer>
     </>
   );
 }
