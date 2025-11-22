@@ -11,9 +11,17 @@ const Legend = styled.div`
   align-items: center;
 `;
 
-const LeadingIndicator = (props: { color: string }) => {
+const LeadingIndicator = (props: {
+  color: string;
+  width?: string;
+  height?: string;
+}) => {
   return (
-    <svg viewBox='0 0 32 32' width='16px' height='16px'>
+    <svg
+      viewBox='0 0 32 32'
+      width={props.width ? props.width : '16px'}
+      height={props.height ? props.height : '16px'}
+    >
       {' '}
       <path fill={props.color} d='M0 0H32V32H0V0Z'></path>
       <path
@@ -54,3 +62,5 @@ export default function RaceLegend() {
     </PartyLegends>
   );
 }
+
+export { LeadingIndicator };
