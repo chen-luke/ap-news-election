@@ -20,6 +20,9 @@ export default function OtherRaces() {
       <RaceLegend />
       <TableContainer>
         <RaceTable data={allRaces} />
+        <div style={{ fontSize: '12px', fontWeight: '300' }}>
+          Updated Nov 21, 2025, 10:30 AM ET
+        </div>
       </TableContainer>
     </StyledWrapper>
   );
