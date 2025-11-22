@@ -1,65 +1,11 @@
 import type { AllRaceType } from '../../voting-data';
 import { useMemo } from 'react';
 import styled from 'styled-components';
-import { LeadingIndicator } from './RaceLegend';
-
-interface RenderReadyRace extends AllRaceType {
-  rowSpan: number;
-}
+import { parseTimeWeight, calcRowSpan } from './RaceTable.util';
+import type { RenderReadyRace } from './RaceTable.util';
+import RaceTableRow from './RaceTableRow';
 
 const MAX_ROWS_PER_TABLE = 11;
-
-const parseTimeWeight = (timeStr: string): number => {
-  const clean = timeStr.toLowerCase().replace(/\./g, '').trim();
-  let [time, modifier] = clean.split(' ');
-  if (!modifier) modifier = 'pm';
-
-  let [hours, minutes] = time.split(':').map(Number);
-  if (!minutes) minutes = 0;
-
-  if (modifier === 'pm' && hours !== 12) hours += 12;
-  if (modifier === 'am' && hours === 12) hours = 0;
-
-  return hours * 100 + minutes;
-};
-
-const getMarginColor = (partyColor: string) => {
-  if (partyColor === '#F3BB2D') return '#91701b';
-  if (partyColor === '#E06016') return '#86390d';
-  if (partyColor === '#16A5A3') return '#0d6361';
-  return '#014678';
-};
-
-/**
- * Takes a raw list of races and returns a new list with 'rowSpan' attached.
- */
-const calcRowSpan = (list: AllRaceType[]): RenderReadyRace[] => {
-  return list.map((item, index) => {
-    const isCovered = index > 0 && list[index - 1].pollTime === item.pollTime;
-    let rowSpan = 0;
-
-    if (!isCovered) {
-      let span = 1;
-      for (let i = index + 1; i < list.length; i++) {
-        if (list[i].pollTime === item.pollTime) {
-          span++;
-        } else {
-          break;
-        }
-      }
-      rowSpan = span;
-    }
-
-    return { ...item, rowSpan };
-  });
-};
-
-const StyledTD = styled.td`
-  vertical-align: top;
-  min-width: 35px;
-  border-bottom: 1px solid rgba(218, 218, 218, 1);
-  padding: 5px 0px;
-`;
 
 const StyledTH = styled.th`
   text-align: left;
@@ -81,30 +27,36 @@ const StyledTable = styled.table`
   margin-top: 0.5rem;
   margin-bottom: 0.5rem;
   font-size: 12px;
-  font-family: Roboto Condensed;
+  font-family: Roboto Condensed; // Font needs to be condense to fit in the table
   font-stretch: 50%;
 `;
 
 export default function RaceTable({ data }: { data: AllRaceType[] }) {
+  // UseMemo to memoize the table chunks calculation so we don't recalculate on every render
   const tableChunks = useMemo(() => {
     // --- STEP 1: BUCKET SORT ---
     const buckets: Record<string, AllRaceType[]> = {};
 
+    // Put each race into a bucket based on its poll time
     data.forEach((race) => {
       if (!buckets[race.pollTime]) buckets[race.pollTime] = [];
       buckets[race.pollTime].push(race);
     });
 
+    // Sort the poll times in ascending order based on time weight.
     const sortedTimes = Object.keys(buckets).sort((a, b) => {
       return parseTimeWeight(a) - parseTimeWeight(b);
     });
 
+    // Use the sorted poll time to sort the races within each bucket.
     const sortedList: AllRaceType[] = [];
     sortedTimes.forEach((time) => {
       sortedList.push(...buckets[time]);
     });
 
     // --- STEP 2: SPLIT ---
+    // Split races into two tables if the total number of races exceeds 11
+    // Other wise return one table of 11 races.
     let leftRaw: AllRaceType[] = [];
     let rightRaw: AllRaceType[] = [];
     const totalItems = sortedList.length;
@@ -117,7 +69,7 @@ export default function RaceTable({ data }: { data: AllRaceType[] }) {
       rightRaw = sortedList.slice(midPoint);
     }
 
-    // --- STEP 3: ENRICH ---
+    // --- STEP 3: Calculate RowSpan ---
     const leftTable = calcRowSpan(leftRaw);
     const rightTable = calcRowSpan(rightRaw);
 
@@ -126,7 +78,6 @@ export default function RaceTable({ data }: { data: AllRaceType[] }) {
 
   const renderTable = (races: RenderReadyRace[], tableIndex: number) => (
     <>
-      {/* border=1 added just so you can verify the rowspan visually */}
       <StyledTable key={tableIndex}>
         <colgroup>
           <col style={{ width: '5%' }} />
@@ -144,35 +95,7 @@ export default function RaceTable({ data }: { data: AllRaceType[] }) {
           </tr>
         </thead>
         <tbody>
-          {races.map((race) => {
-            return (
-              <tr key={race.id}>
-                {race.rowSpan > 0 && (
-                  <StyledTD rowSpan={race.rowSpan}>{race.pollTime}</StyledTD>
-                )}
-
-                <StyledTD
-                  style={{ display: 'flex', alignItems: 'center', gap: '5px' }}
-                >
-                  <LeadingIndicator
-                    color={race.partyColor}
-                    width='12px'
-                    height='12px'
-                  ></LeadingIndicator>
-                  <a href={race.raceUrl}>{race.race} »</a>
-                </StyledTD>
-
-                <StyledTD>
-                  {race.leader}{' '}
-                  <span style={{ color: getMarginColor(race.partyColor) }}>
-                    {race.margin}
-                  </span>
-                </StyledTD>
-
-                <StyledTD>{race.votesCounted}</StyledTD>
-              </tr>
-            );
-          })}
+          <RaceTableRow races={races} />
         </tbody>
       </StyledTable>
     </>
