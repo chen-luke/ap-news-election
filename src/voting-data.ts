@@ -337,131 +337,661 @@ const allRaces: AllRaceType[] = [
   },
 ];
 
-type RaceName = string;
-type Description = string;
+export type ElectionType =
+  | 'Primary'
+  | 'General'
+  | 'Special Primary'
+  | 'Special General'
+  | 'Runoff'
+  | 'Retention'
+  | 'Ballot Measure';
 
-interface ElectionDropDown {
-  date: string;
-  state?: string;
-  type?: string;
-  races?: Record<RaceName, Description>;
+export type OfficeType =
+  | 'US House'
+  | 'Governor'
+  | 'Lt. Governor'
+  | 'Attorney General'
+  | 'Mayor'
+  | 'Supreme Court'
+  | 'Proposition'
+  | 'Question';
+
+export type PartyAffiliation =
+  | 'Republican'
+  | 'Democrat'
+  | 'Independent'
+  | 'Nonpartisan'
+  | 'Mixed';
+
+export interface Candidate {
+  name: string;
+  party?: PartyAffiliation;
+  isIncumbent?: boolean;
+  notes?: string; // Context like "Trump endorsed", "indicted", etc.
 }
 
-const electionDropDownData: ElectionDropDown[] = [
+export interface Race {
+  id: string;
+  title: string; // e.g., "1st District Republican Primary"
+  office: OfficeType;
+  type: ElectionType;
+  district?: string; // e.g., "1st District", "Proposition 50"
+  description: string; // The narrative text provided
+  candidates?: Candidate[]; // Extracted specific candidates mentioned
+  isOpenSeat: boolean; // If the text mentions "vacated", "open", or "term-limited"
+}
+
+export interface StateElectionData {
+  stateName: string;
+  races: Race[];
+}
+
+export interface ElectionEvent {
+  date: string; // ISO Format preferred (2025-MM-DD), or readable string
+  locations: StateElectionData[];
+}
+
+// The main collection type
+export type ElectionSchedule = ElectionEvent[];
+
+export const usElectionSchedule2025: ElectionSchedule = [
   {
-    date: 'April 1',
-    state: 'Florida',
-    races: {
-      '1st District':
-        'The 1st District is the westernmost congressional district in Florida. It has consistently voted for Republican candidates, and is expected to remain in GOP hands.',
-      '6th District':
-        'The 6th District has historically sent Republican candidates to Washington, D.C. The GOP presidential candidate has carried all six counties in the 6th District in the last four presidential elections.',
-    },
+    date: '2025-04-01',
+    locations: [
+      {
+        stateName: 'Florida',
+        races: [
+          {
+            id: 'fl-house-1-rep-prim',
+            title: '1st District Republican Primary',
+            office: 'US House',
+            type: 'Special Primary',
+            district: '1st District',
+            isOpenSeat: true,
+            description:
+              'Ten Republicans are competing for the seat vacated by Matt Gaetz. CFO Jimmy Patronis has received Trump’s endorsement and is considered the favorite. The district is the westernmost in Florida and consistently votes Republican.',
+            candidates: [
+              {
+                name: 'Jimmy Patronis',
+                party: 'Republican',
+                notes: 'Florida Chief Financial Officer, Trump endorsed',
+              },
+            ],
+          },
+          {
+            id: 'fl-house-1-dem-prim',
+            title: '1st District Democratic Primary',
+            office: 'US House',
+            type: 'Special Primary',
+            district: '1st District',
+            isOpenSeat: true,
+            description:
+              'Uncontested primary for the panhandle-based seat. Gay Valimont will advance to the special general election.',
+            candidates: [
+              {
+                name: 'Gay Valimont',
+                party: 'Democrat',
+                notes: 'Gun control activist',
+              },
+            ],
+          },
+          {
+            id: 'fl-house-6-rep-prim',
+            title: '6th District Republican Primary',
+            office: 'US House',
+            type: 'Special Primary',
+            district: '6th District',
+            isOpenSeat: true,
+            description:
+              'Trump has endorsed state Sen. Randy Fine over two other candidates. The district has historically sent Republicans to Congress.',
+            candidates: [
+              {
+                name: 'Randy Fine',
+                party: 'Republican',
+                notes: 'State Senator, Trump endorsed',
+              },
+            ],
+          },
+          {
+            id: 'fl-house-6-dem-prim',
+            title: '6th District Democratic Primary',
+            office: 'US House',
+            type: 'Special Primary',
+            district: '6th District',
+            isOpenSeat: true,
+            description:
+              'One of two Democrats will advance to the general election for this coastal Florida district south of Jacksonville.',
+            candidates: [
+              { name: 'George Selmont', party: 'Democrat', notes: 'Attorney' },
+              { name: 'Josh Weil', party: 'Democrat', notes: 'Educator' },
+            ],
+          },
+        ],
+      },
+      {
+        stateName: 'Wisconsin',
+        races: [
+          {
+            id: 'wi-supreme-court',
+            title: 'Supreme Court Election',
+            office: 'Supreme Court',
+            type: 'General',
+            isOpenSeat: false,
+            description:
+              'Though ostensibly nonpartisan, this race will determine whether the state Supreme Court will remain under 4-3 liberal control or flip to a conservative majority.',
+          },
+        ],
+      },
+    ],
   },
   {
-    date: 'April 1',
-    state: 'Wisconsin',
+    date: '2025-06-10',
+    locations: [
+      {
+        stateName: 'New Jersey',
+        races: [
+          {
+            id: 'nj-gov-dem-prim',
+            title: 'Democratic Governor Primary',
+            office: 'Governor',
+            type: 'Primary',
+            isOpenSeat: true,
+            description:
+              'Governor Phil Murphy is term-limited. The crowded field includes two U.S. House members, mayors of Newark and Jersey City, a former state Senate president and the teachers union president.',
+          },
+          {
+            id: 'nj-gov-rep-prim',
+            title: 'Republican Governor Primary',
+            office: 'Governor',
+            type: 'Primary',
+            isOpenSeat: true,
+            description:
+              'Republicans are lining up to lead a state that swung toward Republicans in 2024. Jack Ciattarelli is running again after a close race in 2021.',
+            candidates: [
+              {
+                name: 'Jack Ciattarelli',
+                party: 'Republican',
+                notes: 'Former state legislator, 2021 nominee',
+              },
+            ],
+          },
+        ],
+      },
+    ],
   },
   {
-    date: 'July 15',
-    state: 'Arizona',
-    races: {
-      '7th District Democratic Primary':
-        'Longtime Rep. Raúl Grijalva died on March 13, almost a year after announcing he had been diagnosed with cancer. His southern Arizona district is among the most Democratic in the state, so the winner of this primary will likely be favored in the special general election.',
-      '7th District Republican Primary':
-        'Arizona’s 7th District, which includes part of Tucson, is majority Hispanic. The safely Democratic district runs along the southern border of Arizona, and had been represented by Grijalva since it was drawn following the 2000 census.',
-    },
+    date: '2025-06-24',
+    locations: [
+      {
+        stateName: 'New York',
+        races: [
+          {
+            id: 'ny-nyc-mayor-prim',
+            title: 'New York City Mayoral Primary',
+            office: 'Mayor',
+            type: 'Primary',
+            isOpenSeat: false,
+            description:
+              'Mayor Eric Adams faces a challenge in the Democratic primary. Almost a dozen candidates are running in the ranked-choice primary, including former Gov. Andrew Cuomo.',
+            candidates: [
+              {
+                name: 'Eric Adams',
+                party: 'Democrat',
+                isIncumbent: true,
+                notes: 'Indicted, running as independent in general',
+              },
+              {
+                name: 'Andrew Cuomo',
+                party: 'Democrat',
+                notes: 'Former Governor',
+              },
+            ],
+          },
+        ],
+      },
+    ],
   },
   {
-    date: 'September 9',
-    state: 'Virginia',
-    races: {
-      '11th District':
-        'Virginia’s governor set this special election to fill the northern Virginia seat held by Rep. Gerry Connolly, who died on May 21. The district is centered in Fairfax, and leans Democratic. Parties handle their nominating processes.',
-    },
+    date: '2025-07-15',
+    locations: [
+      {
+        stateName: 'Arizona',
+        races: [
+          {
+            id: 'az-house-7-dem-prim',
+            title: '7th District Democratic Primary',
+            office: 'US House',
+            type: 'Special Primary',
+            district: '7th District',
+            isOpenSeat: true,
+            description:
+              'Longtime Rep. Raúl Grijalva died on March 13. This southern Arizona district is among the most Democratic in the state.',
+          },
+          {
+            id: 'az-house-7-rep-prim',
+            title: '7th District Republican Primary',
+            office: 'US House',
+            type: 'Special Primary',
+            district: '7th District',
+            isOpenSeat: true,
+            description:
+              'Arizona’s 7th District includes part of Tucson and is majority Hispanic. Safely Democratic.',
+          },
+        ],
+      },
+    ],
   },
   {
-    date: 'September 9',
-    state: 'Massachusetts',
+    date: '2025-09-09',
+    locations: [
+      {
+        stateName: 'Virginia',
+        races: [
+          {
+            id: 'va-house-11-special',
+            title: '11th District Special Election',
+            office: 'US House',
+            type: 'Special General',
+            district: '11th District',
+            isOpenSeat: true,
+            description:
+              'Special election to fill the seat held by Rep. Gerry Connolly, who died on May 21. The district is centered in Fairfax and leans Democratic.',
+          },
+        ],
+      },
+      {
+        stateName: 'Massachusetts',
+        races: [
+          {
+            id: 'ma-boston-mayor-prim',
+            title: 'Boston Mayoral Primary',
+            office: 'Mayor',
+            type: 'Primary',
+            isOpenSeat: false,
+            description:
+              'Incumbent Mayor Michelle Wu seeks a second term. Nonpartisan primary to whittle the field down to two candidates.',
+            candidates: [
+              { name: 'Michelle Wu', party: 'Nonpartisan', isIncumbent: true },
+            ],
+          },
+        ],
+      },
+    ],
   },
   {
-    date: 'September 23',
-    state: 'Arizona',
-    races: {
-      '7th District':
-        'Open since March, after 11-term incumbent Rep. Raúl Grijalva died, this southern Arizona district has sent a Democrat to Congress since being drawn following the 2000 census.',
-    },
+    date: '2025-09-23',
+    locations: [
+      {
+        stateName: 'Arizona',
+        races: [
+          {
+            id: 'az-house-7-special',
+            title: '7th District Special Election',
+            office: 'US House',
+            type: 'Special General',
+            district: '7th District',
+            isOpenSeat: true,
+            description:
+              'Open since March after Rep. Raúl Grijalva died. Historically sends a Democrat to Congress.',
+          },
+        ],
+      },
+    ],
   },
   {
-    date: 'October 7',
-    state: 'Tennessee',
-    races: {
-      '7th District Democratic Primary':
-        'This Middle Tennessee seat is vacant following the resignation of three-term Rep. Mark Green, who left for a private sector job. The Republican-leaning district includes both rural areas as well as parts of Nashville.',
-      '7th District Republican Primary':
-        'Ten candidates seek the Republican nomination, including multiple state representatives and Donald Trump-endorsed Matt Van Epps, a former commissioner of the Tennessee Department of General Services.',
-    },
+    date: '2025-10-07',
+    locations: [
+      {
+        stateName: 'Tennessee',
+        races: [
+          {
+            id: 'tn-house-7-dem-prim',
+            title: '7th District Democratic Primary',
+            office: 'US House',
+            type: 'Special Primary',
+            district: '7th District',
+            isOpenSeat: true,
+            description:
+              'Seat vacant following resignation of Rep. Mark Green. Republican-leaning district.',
+          },
+          {
+            id: 'tn-house-7-rep-prim',
+            title: '7th District Republican Primary',
+            office: 'US House',
+            type: 'Special Primary',
+            district: '7th District',
+            isOpenSeat: true,
+            description:
+              'Ten candidates seek nomination. Includes Trump-endorsed Matt Van Epps.',
+            candidates: [
+              {
+                name: 'Matt Van Epps',
+                party: 'Republican',
+                notes: 'Former commissioner, Trump endorsed',
+              },
+            ],
+          },
+        ],
+      },
+    ],
   },
   {
-    date: 'November 4',
-    state: 'New Jersey',
+    date: '2025-11-04',
+    locations: [
+      {
+        stateName: 'New Jersey',
+        races: [
+          {
+            id: 'nj-gov-general',
+            title: 'Governor',
+            office: 'Governor',
+            type: 'General',
+            isOpenSeat: true,
+            description:
+              'Democrat Mikie Sherrill and Republican Jack Ciattarelli face off to succeed term-limited Gov. Phil Murphy.',
+            candidates: [
+              {
+                name: 'Mikie Sherrill',
+                party: 'Democrat',
+                notes: 'US House member',
+              },
+              {
+                name: 'Jack Ciattarelli',
+                party: 'Republican',
+                notes: '2021 nominee',
+              },
+            ],
+          },
+          {
+            id: 'nj-jc-mayor',
+            title: 'Jersey City Mayor',
+            office: 'Mayor',
+            type: 'General',
+            isOpenSeat: false,
+            description:
+              'Seven candidates running in all-party primary. Runoff on Dec 2 if no majority.',
+          },
+        ],
+      },
+      {
+        stateName: 'Virginia',
+        races: [
+          {
+            id: 'va-gov',
+            title: 'Governor',
+            office: 'Governor',
+            type: 'General',
+            isOpenSeat: true,
+            description:
+              "Democratic Rep. Abigail Spanberger vs. Republican Lt. Gov. Winsome Earle-Sears. Winner will be state's first female governor.",
+            candidates: [
+              { name: 'Abigail Spanberger', party: 'Democrat' },
+              { name: 'Winsome Earle-Sears', party: 'Republican' },
+            ],
+          },
+          {
+            id: 'va-lt-gov',
+            title: 'Lieutenant Governor',
+            office: 'Lt. Governor',
+            type: 'General',
+            isOpenSeat: true,
+            description:
+              'Contest includes Democrat Ghazala Hashmi and Republican John Reid.',
+            candidates: [
+              { name: 'Ghazala Hashmi', party: 'Democrat' },
+              { name: 'John Reid', party: 'Republican' },
+            ],
+          },
+          {
+            id: 'va-ag',
+            title: 'Attorney General',
+            office: 'Attorney General',
+            type: 'General',
+            isOpenSeat: false,
+            description:
+              'Incumbent Jason Miyares faces challenge from Democrat Jay Jones.',
+            candidates: [
+              { name: 'Jason Miyares', party: 'Republican', isIncumbent: true },
+              { name: 'Jay Jones', party: 'Democrat' },
+            ],
+          },
+        ],
+      },
+      {
+        stateName: 'California',
+        races: [
+          {
+            id: 'ca-prop-50',
+            title: 'Proposition 50',
+            office: 'Proposition',
+            type: 'Ballot Measure',
+            district: 'Proposition 50',
+            isOpenSeat: false,
+            description:
+              'Would adopt new congressional maps adding as many as five Democratic-held seats. Response to Texas redrawing maps.',
+          },
+        ],
+      },
+      {
+        stateName: 'Colorado',
+        races: [
+          {
+            id: 'co-prop-mm',
+            title: 'Proposition MM',
+            office: 'Proposition',
+            type: 'Ballot Measure',
+            district: 'Proposition MM',
+            isOpenSeat: false,
+            description:
+              'Raises state income taxes on households earning $300k+ to fund free meals for public school students.',
+          },
+        ],
+      },
+      {
+        stateName: 'Georgia',
+        races: [
+          {
+            id: 'ga-atl-mayor',
+            title: 'Atlanta Mayor',
+            office: 'Mayor',
+            type: 'General',
+            isOpenSeat: false,
+            description:
+              'Andre Dickens seeks second term. Four candidates qualified.',
+            candidates: [
+              {
+                name: 'Andre Dickens',
+                party: 'Nonpartisan',
+                isIncumbent: true,
+              },
+            ],
+          },
+        ],
+      },
+      {
+        stateName: 'Maine',
+        races: [
+          {
+            id: 'me-q1',
+            title: 'Question 1',
+            office: 'Question',
+            type: 'Ballot Measure',
+            district: 'Question 1',
+            isOpenSeat: false,
+            description:
+              'Changes election administration: requires photo ID, shortens absentee period, prohibits phone requests for ballots.',
+          },
+          {
+            id: 'me-q2',
+            title: 'Question 2',
+            office: 'Question',
+            type: 'Ballot Measure',
+            district: 'Question 2',
+            isOpenSeat: false,
+            description:
+              'Red Flag law: allows petition to temporarily prohibit dangerous weapons for those deemed a threat.',
+          },
+        ],
+      },
+      {
+        stateName: 'Michigan',
+        races: [
+          {
+            id: 'mi-detroit-mayor',
+            title: 'Detroit Mayor',
+            office: 'Mayor',
+            type: 'General',
+            isOpenSeat: true,
+            description:
+              'Office open after Mayor Mike Duggan chose not to seek reelection.',
+          },
+        ],
+      },
+      {
+        stateName: 'Minnesota',
+        races: [
+          {
+            id: 'mn-mpls-mayor',
+            title: 'Minneapolis Mayor',
+            office: 'Mayor',
+            type: 'General',
+            isOpenSeat: false,
+            description:
+              'Incumbent Jacob Frey faces crowded field, including Omar Fateh from his left.',
+            candidates: [
+              { name: 'Jacob Frey', party: 'Democrat', isIncumbent: true },
+              { name: 'Omar Fateh', party: 'Democrat' },
+            ],
+          },
+        ],
+      },
+      {
+        stateName: 'New York',
+        races: [
+          {
+            id: 'ny-nyc-mayor-gen',
+            title: 'New York City Mayor',
+            office: 'Mayor',
+            type: 'General',
+            isOpenSeat: false,
+            description:
+              'Democratic nominee Zohran Mamdani, Republican Curtis Sliwa, and Andrew Cuomo (runner-up) contesting general. Incumbent Eric Adams remains on ballot.',
+            candidates: [
+              { name: 'Zohran Mamdani', party: 'Democrat' },
+              { name: 'Curtis Sliwa', party: 'Republican' },
+              { name: 'Andrew Cuomo', party: 'Independent' },
+              { name: 'Eric Adams', party: 'Independent', isIncumbent: true },
+            ],
+          },
+        ],
+      },
+      {
+        stateName: 'Ohio',
+        races: [
+          {
+            id: 'oh-cincy-mayor',
+            title: 'Cincinnati Mayor',
+            office: 'Mayor',
+            type: 'General',
+            isOpenSeat: false,
+            description:
+              'Incumbent Aftab Pureval and Cory Bowman (half-brother of VP JD Vance) are running.',
+            candidates: [
+              {
+                name: 'Aftab Pureval',
+                party: 'Nonpartisan',
+                isIncumbent: true,
+              },
+              { name: 'Cory Bowman', party: 'Nonpartisan' },
+            ],
+          },
+        ],
+      },
+      {
+        stateName: 'Pennsylvania',
+        races: [
+          {
+            id: 'pa-supreme-court',
+            title: 'Supreme Court Retention',
+            office: 'Supreme Court',
+            type: 'Retention',
+            isOpenSeat: false,
+            description:
+              'Three retention races for Democratic justices. Has implications for 5-2 Democratic majority.',
+          },
+          {
+            id: 'pa-pitt-mayor',
+            title: 'Pittsburgh Mayor',
+            office: 'Mayor',
+            type: 'General',
+            isOpenSeat: false, // Technically the seat isn't "open" in the sense of a vacancy, but the incumbent lost the primary.
+            description:
+              'Democrat Corey O’Connor (who ousted incumbent Ed Gainey in primary) vs Republican Tony Moreno.',
+            candidates: [
+              { name: "Corey O'Connor", party: 'Democrat' },
+              { name: 'Tony Moreno', party: 'Republican' },
+            ],
+          },
+        ],
+      },
+      {
+        stateName: 'Texas',
+        races: [
+          {
+            id: 'tx-house-18-special',
+            title: '18th District Special Election',
+            office: 'US House',
+            type: 'Special General',
+            district: '18th District',
+            isOpenSeat: true,
+            description:
+              'Rep. Sylvester Turner died March 5. Special election coincides with general. Top two runoff if no 50%.',
+          },
+          {
+            id: 'tx-prop-15',
+            title: 'Proposition 15',
+            office: 'Proposition',
+            type: 'Ballot Measure',
+            district: 'Proposition 15',
+            isOpenSeat: false,
+            description:
+              'Affirms parents as primary decision makers for children.',
+          },
+          {
+            id: 'tx-prop-16',
+            title: 'Proposition 16',
+            office: 'Proposition',
+            type: 'Ballot Measure',
+            district: 'Proposition 16',
+            isOpenSeat: false,
+            description:
+              'Adds language explicitly stating people must be US citizens to vote in Texas.',
+          },
+        ],
+      },
+    ],
   },
   {
-    date: 'November 4',
-    state: 'Virginia',
-  },
-  {
-    date: 'November 4',
-    state: 'California',
-  },
-  {
-    date: 'November 4',
-    state: 'Colorado',
-  },
-  {
-    date: 'November 4',
-    state: 'Georgia',
-  },
-  {
-    date: 'November 4',
-    state: 'Maine',
-  },
-  {
-    date: 'November 4',
-    state: 'Michigan',
-  },
-  {
-    date: 'November 4',
-    state: 'Minnesota',
-  },
-  {
-    date: 'November 4',
-    state: 'New York',
-  },
-  {
-    date: 'November 4',
-    state: 'Ohio',
-  },
-  {
-    date: 'November 4',
-    state: 'Pennsylvania',
-  },
-  {
-    date: 'November 4',
-    state: 'Texas',
-    races: {
-      '18th District':
-        'Rep. Sylvester Turner died suddenly on March 5. Texas Gov. Greg Abbott set the special election to coincide with the 2025 general election. All candidates run on the same ballot, and if no candidate receives at least 50% of the vote, the top two vote-getters advance to a runoff.',
-    },
-  },
-  {
-    date: 'December 2',
-    races: {
-      '7th District':
-        'The winner of this special election will serve out the remainder of former Rep. Mark Green’s term in the Middle Tennessee district, which includes rural areas as well as parts of Nashville.',
-    },
+    date: '2025-12-02',
+    locations: [
+      {
+        stateName: 'Tennessee',
+        races: [
+          {
+            id: 'tn-house-7-special-gen',
+            title: '7th District Special General',
+            office: 'US House',
+            type: 'Special General',
+            district: '7th District',
+            isOpenSeat: true,
+            description:
+              'Winner will serve remainder of former Rep. Mark Green’s term in Middle Tennessee.',
+          },
+        ],
+      },
+    ],
   },
 ];
 
-export { keyRaces, allRaces, electionDropDownData };
-export type { KeyRacesType, ChoiceType, AllRaceType, ElectionDropDown };
+export { keyRaces, allRaces };
+export type { KeyRacesType, ChoiceType, AllRaceType };
