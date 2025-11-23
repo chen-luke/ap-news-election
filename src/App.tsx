@@ -1,3 +1,4 @@
+import AllElections from './components/all-elections/AllElections';
 import KeyRaceCards from './components/keyrace/KeyRaceCards';
 import Nav from './components/nav/Nav';
 import OtherRaces from './components/other-race/OtherRaces';
@@ -31,6 +32,7 @@ function App() {
           <h2>Key races</h2>
           <KeyRaceCards />
           <OtherRaces />
+          <AllElections />
         </MainContainer>
       </div>
       <Footer></Footer>
