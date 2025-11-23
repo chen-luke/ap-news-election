@@ -80,7 +80,7 @@ export default function RaceTable({ data }: { data: AllRaceType[] }) {
     <>
       <StyledTable key={tableIndex}>
         <colgroup>
-          <col style={{ width: '5%' }} />
+          <col style={{ width: '15%' }} />
           <col style={{ width: '68%' }} />{' '}
           {/* Give the most space to the Race Name */}
           <col style={{ width: '25%' }} />
