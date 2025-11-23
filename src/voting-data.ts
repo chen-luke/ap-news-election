@@ -337,5 +337,131 @@ const allRaces: AllRaceType[] = [
   },
 ];
 
-export { keyRaces, allRaces };
-export type { KeyRacesType, ChoiceType, AllRaceType };
+type RaceName = string;
+type Description = string;
+
+interface ElectionDropDown {
+  date: string;
+  state?: string;
+  type?: string;
+  races?: Record<RaceName, Description>;
+}
+
+const electionDropDownData: ElectionDropDown[] = [
+  {
+    date: 'April 1',
+    state: 'Florida',
+    races: {
+      '1st District':
+        'The 1st District is the westernmost congressional district in Florida. It has consistently voted for Republican candidates, and is expected to remain in GOP hands.',
+      '6th District':
+        'The 6th District has historically sent Republican candidates to Washington, D.C. The GOP presidential candidate has carried all six counties in the 6th District in the last four presidential elections.',
+    },
+  },
+  {
+    date: 'April 1',
+    state: 'Wisconsin',
+  },
+  {
+    date: 'July 15',
+    state: 'Arizona',
+    races: {
+      '7th District Democratic Primary':
+        'Longtime Rep. Raúl Grijalva died on March 13, almost a year after announcing he had been diagnosed with cancer. His southern Arizona district is among the most Democratic in the state, so the winner of this primary will likely be favored in the special general election.',
+      '7th District Republican Primary':
+        'Arizona’s 7th District, which includes part of Tucson, is majority Hispanic. The safely Democratic district runs along the southern border of Arizona, and had been represented by Grijalva since it was drawn following the 2000 census.',
+    },
+  },
+  {
+    date: 'September 9',
+    state: 'Virginia',
+    races: {
+      '11th District':
+        'Virginia’s governor set this special election to fill the northern Virginia seat held by Rep. Gerry Connolly, who died on May 21. The district is centered in Fairfax, and leans Democratic. Parties handle their nominating processes.',
+    },
+  },
+  {
+    date: 'September 9',
+    state: 'Massachusetts',
+  },
+  {
+    date: 'September 23',
+    state: 'Arizona',
+    races: {
+      '7th District':
+        'Open since March, after 11-term incumbent Rep. Raúl Grijalva died, this southern Arizona district has sent a Democrat to Congress since being drawn following the 2000 census.',
+    },
+  },
+  {
+    date: 'October 7',
+    state: 'Tennessee',
+    races: {
+      '7th District Democratic Primary':
+        'This Middle Tennessee seat is vacant following the resignation of three-term Rep. Mark Green, who left for a private sector job. The Republican-leaning district includes both rural areas as well as parts of Nashville.',
+      '7th District Republican Primary':
+        'Ten candidates seek the Republican nomination, including multiple state representatives and Donald Trump-endorsed Matt Van Epps, a former commissioner of the Tennessee Department of General Services.',
+    },
+  },
+  {
+    date: 'November 4',
+    state: 'New Jersey',
+  },
+  {
+    date: 'November 4',
+    state: 'Virginia',
+  },
+  {
+    date: 'November 4',
+    state: 'California',
+  },
+  {
+    date: 'November 4',
+    state: 'Colorado',
+  },
+  {
+    date: 'November 4',
+    state: 'Georgia',
+  },
+  {
+    date: 'November 4',
+    state: 'Maine',
+  },
+  {
+    date: 'November 4',
+    state: 'Michigan',
+  },
+  {
+    date: 'November 4',
+    state: 'Minnesota',
+  },
+  {
+    date: 'November 4',
+    state: 'New York',
+  },
+  {
+    date: 'November 4',
+    state: 'Ohio',
+  },
+  {
+    date: 'November 4',
+    state: 'Pennsylvania',
+  },
+  {
+    date: 'November 4',
+    state: 'Texas',
+    races: {
+      '18th District':
+        'Rep. Sylvester Turner died suddenly on March 5. Texas Gov. Greg Abbott set the special election to coincide with the 2025 general election. All candidates run on the same ballot, and if no candidate receives at least 50% of the vote, the top two vote-getters advance to a runoff.',
+    },
+  },
+  {
+    date: 'December 2',
+    races: {
+      '7th District':
+        'The winner of this special election will serve out the remainder of former Rep. Mark Green’s term in the Middle Tennessee district, which includes rural areas as well as parts of Nashville.',
+    },
+  },
+];
+
+export { keyRaces, allRaces, electionDropDownData };
+export type { KeyRacesType, ChoiceType, AllRaceType, ElectionDropDown };
