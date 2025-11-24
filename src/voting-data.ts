@@ -392,9 +392,9 @@ export interface ElectionEvent {
 }
 
 // The main collection type
-export type ElectionSchedule = ElectionEvent[];
+type ElectionSchedule = ElectionEvent[];
 
-export const usElectionSchedule2025: ElectionSchedule = [
+const usElectionSchedule2025: ElectionSchedule = [
   {
     date: '2025-04-01',
     locations: [
@@ -993,5 +993,5 @@ export const usElectionSchedule2025: ElectionSchedule = [
   },
 ];
 
-export { keyRaces, allRaces };
-export type { KeyRacesType, ChoiceType, AllRaceType };
+export { keyRaces, allRaces, usElectionSchedule2025 };
+export type { KeyRacesType, ChoiceType, AllRaceType, ElectionSchedule };

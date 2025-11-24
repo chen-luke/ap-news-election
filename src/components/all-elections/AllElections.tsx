@@ -1,11 +1,12 @@
 import type { JSX } from 'react';
 import styled from 'styled-components';
 import FilterBox from './FilterBox';
+import AllElectionsDropDown from './AllEctionsDropDown';
 
 const AllElectionsContainer = styled.div`
   display: grid;
   grid-template-columns: auto 210px;
-  column-gap: 4px;
+  column-gap: 36px;
   align-items: start;
 `;
 
@@ -19,7 +20,7 @@ export default function AllElections(): JSX.Element {
   return (
     <AllElectionsContainer>
       <AllRaceHeader>All 2025 elections</AllRaceHeader>
-      <div>List of Races</div>
+      <AllElectionsDropDown />
       <FilterBox />
     </AllElectionsContainer>
   );
