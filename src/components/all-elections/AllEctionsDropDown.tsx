@@ -1,12 +1,14 @@
 import styled from 'styled-components';
-import {
-  USHosueIcon,
-  GovernorIcon,
-  MayorIcon,
-  BallotIcon,
-} from './ElectionIcons';
-import type { ElectionEvent } from '../../voting-data';
+
+import type {
+  ElectionDayFormatted,
+  RaceDetail,
+  StateElectionGroups,
+} from '../../voting-data';
 import { usElectionSchedule2025 } from '../../voting-data';
+import { v4 as uuidv4 } from 'uuid';
+import RaceTypeIcons from './RaceTypeIcons';
+import { useState } from 'react';
 
 const DropdownContainer = styled.div`
   display: grid;
@@ -14,32 +16,95 @@ const DropdownContainer = styled.div`
 `;
 const Dropdown = styled.div``;
 
-const getElectionIcon = (type: string | undefined) => {
-  //   type?: 'US House' | 'Governor' | 'mayor' | 'ballot measure';
-  if (type === 'US House') return <USHosueIcon />;
-  if (type === 'Governor') return <GovernorIcon />;
-  if (type === 'mayor') return <MayorIcon />;
-  if (type === 'ballot measure') return <BallotIcon />;
-  return '';
-};
+const ExpandButton = styled.button`
+  font-size: 25px;
+  font-weight: 700;
+  line-height: 0.9;
+  background-color: transparent;
+  border-radius: 6px;
+  transition: background-color 0.15s;
+  cursor: pointer;
+  height: 28px;
+  width: 28px;
+  display: flex;
+  place-content: center;
+  color: black;
+  border: 0;
+  margin: 0;
+  padding: 0;
 
-const convertDate = (date: string) => {
-  const dateObject: Date = new Date(`${date}T00:00:00`); // Options for formatting the date
-  const options: Intl.DateTimeFormatOptions = {
-    month: 'long', // full name of the month (e.g., "April")
-    day: 'numeric', // the day as a number (e.g., "1")
-  };
-  return dateObject.toLocaleDateString(undefined, options);
-};
+  &:hover {
+    background-color: #c5c5c5ff;
+  }
+`;
 
 export default function AllElectionsDropDown() {
+  const [isExpanded, setIsExpanded] = useState(false);
+
+  const toggleDropdown = () => setIsExpanded(!isExpanded);
+
   return (
     <DropdownContainer>
       <Dropdown>
-        {usElectionSchedule2025.map((item: ElectionEvent) => (
-          <div>
-            {convertDate(item.date)}
-            <hr />
+        {usElectionSchedule2025.map((day: ElectionDayFormatted) => (
+          <div key={uuidv4()}>
+            {day.date}
+            {day.races.map((race: StateElectionGroups) => (
+              <div key={uuidv4()}>
+                <div
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '8px',
+                    justifyContent: 'space-between',
+                  }}
+                >
+                  <h3
+                    style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '8px',
+                      margin: '2px 0px 4px',
+                    }}
+                  >
+                    {race.state}
+                    <RaceTypeIcons race={race} />
+                  </h3>
+                  {isExpanded ? (
+                    <ExpandButton onClick={toggleDropdown}>-</ExpandButton>
+                  ) : (
+                    <ExpandButton onClick={toggleDropdown}>+</ExpandButton>
+                  )}
+                </div>
+                <hr />
+                <div>
+                  {Object.entries(race).map(([key, value]) => {
+                    if (key === 'state' || !value) return null;
+
+                    const raceDetails = value as RaceDetail[];
+
+                    return (
+                      <div key={uuidv4()}>
+                        {isExpanded &&
+                          raceDetails.map((detail: RaceDetail) => {
+                            return (
+                              <div key={uuidv4()}>
+                                <a
+                                  href=''
+                                  style={{ textDecoration: 'underline' }}
+                                >
+                                  <b>{detail.district}</b>
+                                </a>{' '}
+                                {detail.description}
+                              </div>
+                            );
+                          })}
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            ))}
           </div>
         ))}
       </Dropdown>

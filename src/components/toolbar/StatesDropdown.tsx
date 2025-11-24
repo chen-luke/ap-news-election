@@ -22,7 +22,7 @@ export default function StateDropdown() {
   return (
     <StyledDropDown>
       <StyledSelect id='stateSelect' name='selection'>
-        <option value='' disabled selected hidden>
+        <option value='' disabled defaultValue={'Select A State'} hidden>
           Select A State
         </option>
         <option value=''>New York</option>
