@@ -46,11 +46,11 @@ const APIcon = styled.img`
   width: 12px;
 `;
 
-const RaceChoice = styled.div<{ isBold: boolean }>`
+const RaceChoice = styled.div<{ isbold: string }>`
   display: flex;
   align-items: center;
   font-size: 0.875rem;
-  font-weight: ${(props) => (props.isBold ? '600' : '300')};
+  font-weight: ${(props) => (props.isbold ? '600' : '300')};
   justify-content: space-between;
 `;
 
@@ -121,7 +121,7 @@ const RaceCard = (props: { keyrace: KeyRacesType }) => {
             key={choice.name}
             style={{ display: 'flex', flexDirection: 'column', gap: '3px' }}
           >
-            <RaceChoice isBold={choice.isLeading}>
+            <RaceChoice isbold={choice.isLeading.toString()}>
               <div style={{ display: 'flex', alignItems: 'center' }}>
                 {choice.isLeading && (
                   <LeadingIndicator viewBox='0 0 32 32'>

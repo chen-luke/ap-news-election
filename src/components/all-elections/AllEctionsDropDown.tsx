@@ -1,12 +1,12 @@
 import styled from 'styled-components';
-import {
-  USHosueIcon,
-  GovernorIcon,
-  MayorIcon,
-  BallotIcon,
-} from './ElectionIcons';
-import type { ElectionEvent } from '../../voting-data';
+
+import type {
+  ElectionDayFormatted,
+  StateElectionGroups,
+} from '../../voting-data';
 import { usElectionSchedule2025 } from '../../voting-data';
+import { v4 as uuidv4 } from 'uuid';
+import RaceDropdown from './RaceDropdown';
 
 const DropdownContainer = styled.div`
   display: grid;
@@ -14,32 +14,28 @@ const DropdownContainer = styled.div`
 `;
 const Dropdown = styled.div``;
 
-const getElectionIcon = (type: string | undefined) => {
-  //   type?: 'US House' | 'Governor' | 'mayor' | 'ballot measure';
-  if (type === 'US House') return <USHosueIcon />;
-  if (type === 'Governor') return <GovernorIcon />;
-  if (type === 'mayor') return <MayorIcon />;
-  if (type === 'ballot measure') return <BallotIcon />;
-  return '';
-};
-
-const convertDate = (date: string) => {
-  const dateObject: Date = new Date(`${date}T00:00:00`); // Options for formatting the date
-  const options: Intl.DateTimeFormatOptions = {
-    month: 'long', // full name of the month (e.g., "April")
-    day: 'numeric', // the day as a number (e.g., "1")
-  };
-  return dateObject.toLocaleDateString(undefined, options);
-};
-
 export default function AllElectionsDropDown() {
   return (
     <DropdownContainer>
       <Dropdown>
-        {usElectionSchedule2025.map((item: ElectionEvent) => (
-          <div>
-            {convertDate(item.date)}
-            <hr />
+        {usElectionSchedule2025.map((day: ElectionDayFormatted) => (
+          <div key={uuidv4()} style={{ marginTop: '10px' }}>
+            <span style={{ fontWeight: '300' }}>{day.date}</span>
+            <hr style={{ marginBottom: '5px', marginTop: '5px' }} />
+            {day.races.map(
+              (
+                race: StateElectionGroups,
+                index: number,
+                array: StateElectionGroups[]
+              ) => (
+                <RaceDropdown
+                  key={uuidv4()}
+                  race={race}
+                  index={index}
+                  length={array.length}
+                />
+              )
+            )}
           </div>
         ))}
       </Dropdown>

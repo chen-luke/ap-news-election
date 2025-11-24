@@ -77,28 +77,25 @@ export default function RaceTable({ data }: { data: AllRaceType[] }) {
   }, [data]);
 
   const renderTable = (races: RenderReadyRace[], tableIndex: number) => (
-    <>
-      <StyledTable key={tableIndex}>
-        <colgroup>
-          <col style={{ width: '15%' }} />
-          <col style={{ width: '68%' }} />{' '}
-          {/* Give the most space to the Race Name */}
-          <col style={{ width: '25%' }} />
-          <col style={{ width: '5%' }} />
-        </colgroup>
-        <thead>
-          <tr>
-            <StyledTH>Poll Close</StyledTH>
-            <StyledTH>Race</StyledTH>
-            <StyledTH>Leader</StyledTH>
-            <StyledTH colSpan={1}>Est. Votes Counted</StyledTH>
-          </tr>
-        </thead>
-        <tbody>
-          <RaceTableRow races={races} />
-        </tbody>
-      </StyledTable>
-    </>
+    <StyledTable key={tableIndex}>
+      <colgroup>
+        <col style={{ width: '15%' }} />
+        <col style={{ width: '68%' }} />
+        <col style={{ width: '25%' }} />
+        <col style={{ width: '5%' }} />
+      </colgroup>
+      <thead>
+        <tr>
+          <StyledTH>Poll Close</StyledTH>
+          <StyledTH>Race</StyledTH>
+          <StyledTH>Leader</StyledTH>
+          <StyledTH colSpan={1}>Est. Votes Counted</StyledTH>
+        </tr>
+      </thead>
+      <tbody>
+        <RaceTableRow races={races} />
+      </tbody>
+    </StyledTable>
   );
 
   return <>{tableChunks.map((chunk, i) => renderTable(chunk, i))}</>;
