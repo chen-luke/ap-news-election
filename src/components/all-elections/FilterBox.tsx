@@ -59,7 +59,7 @@ export default function FilterBox() {
               fill='#494949'
             ></rect>
           </svg>
-          <FilterBoxText>U.S. Senate</FilterBoxText>
+          <FilterBoxText>U.S. HOUSE</FilterBoxText>
         </Category>
         <Category>
           <svg
