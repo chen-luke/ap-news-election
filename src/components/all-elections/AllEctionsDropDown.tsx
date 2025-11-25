@@ -4,9 +4,9 @@ import type {
   ElectionDayFormatted,
   StateElectionGroups,
 } from '../../voting-data';
-import { usElectionSchedule2025 } from '../../voting-data';
 import { v4 as uuidv4 } from 'uuid';
 import RaceDropdown from './RaceDropdown';
+import type { JSX } from 'react';
 
 const DropdownContainer = styled.div`
   display: grid;
@@ -14,11 +14,17 @@ const DropdownContainer = styled.div`
 `;
 const Dropdown = styled.div``;
 
-export default function AllElectionsDropDown() {
+export default function AllElectionsDropDown({
+  filteredElections,
+  activeFilter,
+}: {
+  filteredElections: ElectionDayFormatted[];
+  activeFilter: string | null;
+}): JSX.Element {
   return (
     <DropdownContainer>
       <Dropdown>
-        {usElectionSchedule2025.map((day: ElectionDayFormatted) => (
+        {filteredElections.map((day: ElectionDayFormatted) => (
           <div key={uuidv4()} style={{ marginTop: '10px' }}>
             <span style={{ fontWeight: '300' }}>{day.date}</span>
             <hr style={{ marginBottom: '5px', marginTop: '5px' }} />
@@ -33,6 +39,7 @@ export default function AllElectionsDropDown() {
                   race={race}
                   index={index}
                   length={array.length}
+                  activeFilter={activeFilter}
                 />
               )
             )}
