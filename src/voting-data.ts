@@ -350,7 +350,7 @@ export type StateElectionGroups = {
   supremeCourtRace?: RaceDetail[];
   ltGovRace?: RaceDetail[];
   attorneyGeneralRace?: RaceDetail[];
-  ballotMeasure?: RaceDetail[];
+  ballotRace?: RaceDetail[];
   questionRace?: RaceDetail[];
 };
 
@@ -561,7 +561,7 @@ const usElectionSchedule2025: ElectionDayFormatted[] = [
       },
       {
         state: 'California',
-        ballotMeasure: [
+        ballotRace: [
           {
             district: 'Proposition 50',
             description:
@@ -571,7 +571,7 @@ const usElectionSchedule2025: ElectionDayFormatted[] = [
       },
       {
         state: 'Colorado',
-        ballotMeasure: [
+        ballotRace: [
           {
             district: 'Proposition MM',
             description:
@@ -591,7 +591,7 @@ const usElectionSchedule2025: ElectionDayFormatted[] = [
       },
       {
         state: 'Maine',
-        questionRace: [
+        ballotRace: [
           {
             district: 'Question 1',
             description:
@@ -670,7 +670,7 @@ const usElectionSchedule2025: ElectionDayFormatted[] = [
               'Rep. Sylvester Turner died March 5. Special election coincides with general. Top two runoff if no 50%.',
           },
         ],
-        ballotMeasure: [
+        ballotRace: [
           {
             district: 'Proposition 15',
             description:
