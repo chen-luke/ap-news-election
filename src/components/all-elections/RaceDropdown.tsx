@@ -30,6 +30,7 @@ interface RaceDropdownProps {
   race: StateElectionGroups;
   index: number;
   length: number;
+  activeFilter: string | null;
 }
 
 export default function RaceDropdown({
