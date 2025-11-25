@@ -1,7 +1,11 @@
-import type { JSX } from 'react';
+import { useState, type JSX } from 'react';
 import styled from 'styled-components';
 import FilterBox from './FilterBox';
 import AllElectionsDropDown from './AllEctionsDropDown';
+import {
+  usElectionSchedule2025,
+  type ElectionDayFormatted,
+} from '../../voting-data';
 
 const AllElectionsContainer = styled.div`
   display: grid;
@@ -17,11 +21,36 @@ const AllRaceHeader = styled.h2`
 `;
 
 export default function AllElections(): JSX.Element {
+  const [activeFilter, setActiveFilter] = useState<string | null>(null);
+  // filter data
+  const handleFilterChange = (key: string | null) => {
+    setActiveFilter((prekey) => (prekey === key ? null : key));
+  };
+
+  const filteredElections = !activeFilter
+    ? usElectionSchedule2025
+    : usElectionSchedule2025.filter((day) =>
+        day.races.some((race) => {
+          if (activeFilter === 'U.S. HOUSE')
+            return Array.isArray(race.houseRace) && race.houseRace.length > 0;
+          if (activeFilter === 'GOVERNOR')
+            return Array.isArray(race.govRace) && race.govRace.length > 0;
+          if (activeFilter === 'MAYOR')
+            return Array.isArray(race.mayorRace) && race.mayorRace.length > 0;
+          if (activeFilter === 'BALLOT MEASURE')
+            return Array.isArray(race.ballotRace) && race.ballotRace.length > 0;
+          return false;
+        })
+      );
+
   return (
     <AllElectionsContainer>
       <AllRaceHeader>All 2025 elections</AllRaceHeader>
-      <AllElectionsDropDown />
-      <FilterBox />
+      <AllElectionsDropDown
+        filteredElections={filteredElections}
+        activeFilter={activeFilter}
+      />
+      <FilterBox onFilterChange={handleFilterChange} />
     </AllElectionsContainer>
   );
 }
