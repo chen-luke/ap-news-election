@@ -25,8 +25,8 @@ function AllElectionsDropDown({
   return (
     <DropdownContainer>
       <Dropdown>
-        {filteredElections.map((day: ElectionDayFormatted) => (
-          <div key={uuidv4()} style={{ marginTop: '10px' }}>
+        {filteredElections.map((day: ElectionDayFormatted, index) => (
+          <div key={index} style={{ marginTop: '10px' }}>
             <span style={{ fontWeight: '300' }}>{day.date}</span>
             <hr style={{ marginBottom: '5px', marginTop: '5px' }} />
             {day.races.map(
@@ -36,7 +36,7 @@ function AllElectionsDropDown({
                 array: StateElectionGroups[]
               ) => (
                 <RaceDropdown
-                  key={uuidv4()}
+                  key={index}
                   race={race}
                   index={index}
                   length={array.length}
