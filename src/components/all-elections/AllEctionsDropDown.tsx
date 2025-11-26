@@ -7,6 +7,7 @@ import type {
 import { v4 as uuidv4 } from 'uuid';
 import RaceDropdown from './RaceDropdown';
 import type { JSX } from 'react';
+import React from 'react';
 
 const DropdownContainer = styled.div`
   display: grid;
@@ -14,7 +15,7 @@ const DropdownContainer = styled.div`
 `;
 const Dropdown = styled.div``;
 
-export default function AllElectionsDropDown({
+function AllElectionsDropDown({
   filteredElections,
   activeFilter,
 }: {
@@ -49,3 +50,5 @@ export default function AllElectionsDropDown({
     </DropdownContainer>
   );
 }
+
+export default React.memo(AllElectionsDropDown);

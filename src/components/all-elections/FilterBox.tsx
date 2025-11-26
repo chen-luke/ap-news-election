@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import getRaceIcon from './AllElection.util';
+import React from 'react';
 
 const CategoryContainer = styled.div`
   display: grid;
@@ -48,7 +49,7 @@ interface FilterBoxProps {
   onFilterChange: (key: string | null) => void;
 }
 
-export default function FilterBox({ onFilterChange }: FilterBoxProps) {
+function FilterBox({ onFilterChange }: FilterBoxProps) {
   return (
     <FilterContainer>
       <div>
@@ -70,3 +71,5 @@ export default function FilterBox({ onFilterChange }: FilterBoxProps) {
     </FilterContainer>
   );
 }
+
+export default React.memo(FilterBox);
