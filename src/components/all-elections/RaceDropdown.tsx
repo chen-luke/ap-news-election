@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import { v4 as uuidv4 } from 'uuid';
 import type { RaceDetail, StateElectionGroups } from '../../voting-data';
 import { useState } from 'react';
 import RaceTypeIcons from './RaceTypeIcons';
@@ -43,7 +42,7 @@ export default function RaceDropdown({
   const toggleDropdown = () => setIsExpanded(!isExpanded);
 
   return (
-    <div key={uuidv4()}>
+    <div key={index}>
       <div
         style={{
           display: 'flex',
@@ -77,11 +76,11 @@ export default function RaceDropdown({
           const raceDetails = value as RaceDetail[];
 
           return (
-            <div key={uuidv4()}>
+            <div key={index + key}>
               {isExpanded &&
-                raceDetails.map((detail: RaceDetail) => {
+                raceDetails.map((detail: RaceDetail, index) => {
                   return (
-                    <div key={uuidv4()}>
+                    <div key={index + detail.district}>
                       <a href='' style={{ textDecoration: 'underline' }}>
                         <b>{detail.district}</b>
                       </a>{' '}

@@ -4,7 +4,6 @@ import type {
   ElectionDayFormatted,
   StateElectionGroups,
 } from '../../voting-data';
-import { v4 as uuidv4 } from 'uuid';
 import RaceDropdown from './RaceDropdown';
 import type { JSX } from 'react';
 import React from 'react';

@@ -1,6 +1,5 @@
 import type { JSX } from 'react';
 import type { StateElectionGroups } from '../../voting-data';
-import { v4 as uuidv4 } from 'uuid';
 import getRaceIcon from './AllElection.util';
 
 interface RaceTypeIconsProps {
@@ -20,7 +19,7 @@ export default function RaceTypeIcons({
         if (!IconComponent || !Array.isArray(value)) return null;
         return (
           Array.isArray(value) &&
-          value.map(() => <IconComponent key={uuidv4()} />)
+          value.map((_, index) => <IconComponent key={index} />)
         );
       })}
     </div>
