@@ -1,6 +1,7 @@
 import AllElections from './components/all-elections/AllElections';
 import DonationPrompt from './components/donation-prompt/DonationPrompt';
 import ElectionDataCredits from './components/election-data-credits/ElectionDataCredits';
+import Footer from './components/footer/Footer';
 import KeyRaceCards from './components/keyrace/KeyRaceCards';
 import Nav from './components/nav/Nav';
 import OtherRaces from './components/other-race/OtherRaces';
@@ -12,15 +13,6 @@ const MainContainer = styled.main`
   margin: 0 auto;
   gap: 0px;
   max-width: 1030px;
-`;
-
-const Footer = styled.footer`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 8rem;
-  background-color: #f1f1f1;
-  margin-top: 4rem;
 `;
 
 const StyledHr = styled.hr`
@@ -47,7 +39,7 @@ function App() {
           <ElectionDataCredits />
         </MainContainer>
       </div>
-      <Footer></Footer>
+      <Footer />
     </>
   );
 }
