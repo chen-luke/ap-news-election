@@ -9,11 +9,17 @@ const AllElectionsContainer = styled.div`
   grid-template-columns: auto 210px;
   column-gap: 36px;
   align-items: start;
+  @media (max-width: 1250px) {
+    grid-template-columns: 1fr;
+  }
 `;
 
 const AllRaceHeader = styled.h2`
   grid-column: span 2;
   margin: 12px 0px;
+  @media (max-width: 1250px) {
+    grid-column: span 1;
+  }
 `;
 
 export default function AllElections(): JSX.Element {
