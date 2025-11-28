@@ -1,4 +1,6 @@
 import AllElections from './components/all-elections/AllElections';
+import DonationPrompt from './components/donation-prompt/DonationPrompt';
+import ElectionDataCredits from './components/election-data-credits/ElectionDataCredits';
 import KeyRaceCards from './components/keyrace/KeyRaceCards';
 import Nav from './components/nav/Nav';
 import OtherRaces from './components/other-race/OtherRaces';
@@ -21,6 +23,13 @@ const Footer = styled.footer`
   margin-top: 4rem;
 `;
 
+const StyledHr = styled.hr`
+  border: none;
+  border-top: 1px solid #ccc;
+  width: 385px;
+  margin: 4rem auto;
+`;
+
 function App() {
   return (
     <>
@@ -33,6 +42,9 @@ function App() {
           <KeyRaceCards />
           <OtherRaces />
           <AllElections />
+          <StyledHr />
+          <DonationPrompt />
+          <ElectionDataCredits />
         </MainContainer>
       </div>
       <Footer></Footer>
