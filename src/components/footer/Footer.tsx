@@ -1,8 +1,7 @@
 import styled from 'styled-components';
 import { FaXTwitter, FaInstagram, FaFacebook } from 'react-icons/fa6';
 import { CiShare1 } from 'react-icons/ci';
-import { IconBase, type IconTree, type IconType } from 'react-icons';
-import type { JSX } from 'react';
+import { type IconType } from 'react-icons';
 
 const FooterContainer = styled.footer`
   background-color: #000;
