@@ -71,13 +71,16 @@ const StyledTable = styled.table`
       width: 80px;
     } /* Leader */
     col:nth-child(4) {
-      width: 35px;
+      width: 60px;
     } /* Est Votes */
 
     /* Optional: tightening padding could help here too */
     td,
     th {
       padding-right: 2px;
+    }
+    th {
+      font-size: 0.68rem;
     }
   }
 `;

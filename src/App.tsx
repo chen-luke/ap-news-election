@@ -15,21 +15,32 @@ const MainContainer = styled.main`
   max-width: 1030px;
 `;
 
+const ElectionTitle = styled.div`
+  font-size: 3.25rem;
+  font-weight: 700;
+  @media (max-width: 600px) {
+    font-size: 2.25rem;
+  }
+`;
+
 const StyledHr = styled.hr`
   border: none;
   border-top: 1px solid #ccc;
   width: 385px;
   margin: 4rem auto;
+  @media (max-width: 450px) {
+    width: 80%;
+  }
 `;
 
 function App() {
   return (
     <>
       <div>
-        <Nav />
-        <ToolBar />
+        {/* <Nav />
+        <ToolBar /> */}
         <MainContainer>
-          <h1>2025 General Election Results</h1>
+          <ElectionTitle>2025 General Election Results</ElectionTitle>
           <h2>Key races</h2>
           <KeyRaceCards />
           <OtherRaces />

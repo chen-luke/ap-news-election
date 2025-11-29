@@ -3,6 +3,14 @@ import styled from 'styled-components';
 const PartyLegends = styled.div`
   display: flex;
   gap: 0.75rem;
+  @media (max-width: 600px) {
+    font-size: 11px;
+    gap: 0.5rem;
+    svg {
+      width: 14px;
+      height: 14px;
+    }
+  }
 `;
 
 const Legend = styled.div`
