@@ -11,6 +11,13 @@ const TableContainer = styled.div`
   justify-content: space-between;
   align-items: flex-start;
   font-size: 0.875rem;
+  padding: 0px 10px;
+
+  @media (max-width: 1100px) {
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+  }
 `;
 
 export default function OtherRaces() {

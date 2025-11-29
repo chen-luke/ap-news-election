@@ -7,14 +7,20 @@ import { usElectionSchedule2025 } from '../../voting-data';
 const AllElectionsContainer = styled.div`
   display: grid;
   grid-template-columns: auto 210px;
+  grid-template-areas: 'header header' 'dropdown filter';
   column-gap: 36px;
   align-items: start;
   @media (max-width: 1250px) {
     grid-template-columns: 1fr;
+    grid-template-areas:
+      'header'
+      'filter'
+      'dropdown';
   }
 `;
 
 const AllRaceHeader = styled.h2`
+  grid-area: header;
   grid-column: span 2;
   margin: 12px 0px;
   @media (max-width: 1250px) {
