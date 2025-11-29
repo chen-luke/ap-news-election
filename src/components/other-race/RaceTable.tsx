@@ -11,13 +11,11 @@ const StyledTH = styled.th`
   text-align: left;
   color: rgb(73, 73, 73);
   border-bottom: 1px solid black;
-  min-width: 35px;
   padding-left: 0px;
   line-height: 1rem;
   font-size: 0.75rem;
   font-weight: 525;
   text-transform: uppercase;
-  width: 15%;
 `;
 
 const StyledTable = styled.table`
@@ -27,8 +25,61 @@ const StyledTable = styled.table`
   margin-top: 0.5rem;
   margin-bottom: 0.5rem;
   font-size: 12px;
-  font-family: Roboto Condensed; // Font needs to be condense to fit in the table
   font-stretch: 50%;
+
+  svg {
+    flex-shrink: 0;
+  }
+
+  /* --- 1. Base Column Styling (Desktop) --- */
+
+  /* Target the <col> elements for Widths */
+
+  col:nth-child(1) {
+    width: 60px;
+  } /* Poll Close */
+
+  col:nth-child(2) {
+    width: auto;
+  } /* Race (Flexible) */
+
+  col:nth-child(3) {
+    width: 100px;
+  } /* Leader */
+
+  col:nth-child(4) {
+    width: 70px;
+  } /* Est. Votes */
+
+  /* Prevent wrapping on the 2nd to last column (Leader) */
+  tbody tr td:nth-last-of-type(2) {
+    white-space: nowrap;
+  }
+
+  @media (max-width: 1100px) {
+    width: 100%;
+  }
+
+  @media (max-width: 400px) {
+    font-size: 10px; /* Smaller font for mobile */
+
+    /* Shrink fixed columns to give "Race" more room */
+    col:nth-child(1) {
+      width: 50px;
+    } /* Poll Close */
+    col:nth-child(3) {
+      width: 80px;
+    } /* Leader */
+    col:nth-child(4) {
+      width: 35px;
+    } /* Est Votes */
+
+    /* Optional: tightening padding could help here too */
+    td,
+    th {
+      padding-right: 2px;
+    }
+  }
 `;
 
 export default function RaceTable({ data }: { data: AllRaceType[] }) {
@@ -79,10 +130,10 @@ export default function RaceTable({ data }: { data: AllRaceType[] }) {
   const renderTable = (races: RenderReadyRace[], tableIndex: number) => (
     <StyledTable key={tableIndex}>
       <colgroup>
-        <col style={{ width: '15%' }} />
-        <col style={{ width: '68%' }} />
-        <col style={{ width: '25%' }} />
-        <col style={{ width: '5%' }} />
+        <col /> {/* Poll Close (width set in StyledTable) */}
+        <col /> {/* Race (width set in StyledTable) */}
+        <col /> {/* Leader (width set in StyledTable) */}
+        <col /> {/* Est Votes (width set in StyledTable) */}
       </colgroup>
       <thead>
         <tr>
