@@ -39,10 +39,14 @@ const FilterBoxText = styled.div`
 `;
 
 const FilterContainer = styled.div`
+  grid-area: filter;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 2px 6px;
   border-radius: 5px;
   padding: 14px 0px;
   background-color: rgb(255, 255, 255);
+  @media (max-width: 1250px) {
+    margin-top: 2rem;
+  }
 `;
 
 interface FilterBoxProps {

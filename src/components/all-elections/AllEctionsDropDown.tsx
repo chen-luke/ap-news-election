@@ -9,6 +9,7 @@ import type { JSX } from 'react';
 import React from 'react';
 
 const DropdownContainer = styled.div`
+  grid-area: dropdown;
   display: grid;
   gap: 1rem;
 `;
