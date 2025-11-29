@@ -24,6 +24,7 @@ const FooterLinkGroup = styled.div`
   @media (max-width: 1250px) {
     grid-template-columns: 1fr;
     gap: 40px;
+    margin-right: 0;
   }
 `;
 
