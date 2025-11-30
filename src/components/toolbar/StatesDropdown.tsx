@@ -16,6 +16,11 @@ const StyledSelect = styled.select`
   border-color: white;
   border-right: 1rem solid #ffffffff;
   padding-top: 3px;
+  min-height: 38px;
+  @media (max-width: 750px) {
+    grid-area: 2/2;
+    width: 80%;
+  }
 `;
 
 export default function StateDropdown() {
