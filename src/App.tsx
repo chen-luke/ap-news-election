@@ -37,8 +37,8 @@ function App() {
   return (
     <>
       <div>
-        {/* <Nav />
-        <ToolBar /> */}
+        <Nav />
+        <ToolBar />
         <MainContainer>
           <ElectionTitle>2025 General Election Results</ElectionTitle>
           <h2>Key races</h2>
