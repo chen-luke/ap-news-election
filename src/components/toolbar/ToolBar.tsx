@@ -11,6 +11,9 @@ const StyledLogoContainer = styled.div`
   align-items: center;
   margin-left: 15px;
   cursor: pointer;
+  @media (max-width: 750px) {
+    grid-area: 2/1;
+  }
 `;
 
 const StyledToolBar = styled.div`
@@ -20,6 +23,13 @@ const StyledToolBar = styled.div`
   padding: 0.5rem 0;
   border-top: 1px solid #696969;
   grid-template-columns: 1fr 3fr 1fr;
+
+  @media (max-width: 750px) {
+    grid-template-rows: auto auto;
+    grid-template-columns: auto 1fr;
+    height: auto;
+    gap: 1rem;
+  }
 `;
 
 const StyledHeaderLinks = styled.div`
@@ -28,6 +38,9 @@ const StyledHeaderLinks = styled.div`
   gap: 2rem;
   align-items: center;
   cursor: pointer;
+  @media (max-width: 750px) {
+    grid-area: 1/ 1 / auto / -1;
+  }
 `;
 
 const StyledLinks = styled.a`
